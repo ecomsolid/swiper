@@ -270,11 +270,18 @@ const Pagination = {
     }
 
     if (params.clickable) {
-      $el.on('click', `.${params.bulletClass.replace(/ /g, '.')}`, function onClick(e) {
+      $el.on('mousemove', `.${params.bulletClass}`, () => {
+        swiper.allowTouchMove = false;
+      });
+      $el.on('mouseout', `.${params.bulletClass}`, () => {
+        swiper.allowTouchMove = true;
+      });
+      $el.on('click', `.${params.bulletClass}`, function onClick(e) {
         e.preventDefault();
         let index = $(this).index() * swiper.params.slidesPerGroup;
         if (swiper.params.loop) index += swiper.loopedSlides;
         swiper.slideTo(index);
+        swiper.allowTouchMove = true;
       });
     }
 
